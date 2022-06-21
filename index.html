@@ -44,8 +44,11 @@ document.addEventListener("DOMContentLoaded", function(){
 	if (getQueryString()['tw'] != undefined)
 		document.getElementById('chat').src = 'https://www.twitch.tv/embed/' + getQueryString()['tw'] + '/chat?parent=kinotw.github.io';
 		
+	if (getQueryString()['yt'] != undefined)
+		document.getElementById('chat').src = 'https://www.youtube.com/embed/' + getQueryString()['yt'];
+		
 	if (PlayerInited == false)
-		document.getElementById('wrapper').innerHTML = '<div style="margin:0 auto; padding:25px; width:600px;">1. Узнайте id плеера на сайте "goodgame.ru", для этого нажмите кнопку поделиться и скопируйте номер после "/player?").<br><br>2. Скопируйте строку: <a href="https://kinotw.github.io/?gg=1&tw=residentevil" target="_blank">https://kinotw.github.io/?gg=1&tw=residentevil</a> и замените в ней число "1" на id вашего плеера GoodGame, а также "residentevil" на ваш ник на "twitch.tv".<br><br>3. Перейдите по получившейся ссылке.<br><br><br>Если вместо "goodgame.ru" вы хотите использовать "wasd.tv", то замените в ссылке "gg=1" на "wsd=ваш_ник_на_wasd", чтобы вышло следующее: <a href="https://kinotw.github.io/?wsd=1&tw=residentevil" target="_blank">https://kinotw.github.io/?wsd=1&tw=residentevil</a>.</div>';
+		document.getElementById('wrapper').innerHTML = '<div style="margin:0 auto; padding:25px; width:600px;">1. Узнайте id плеера на сайте "goodgame.ru", для этого нажмите кнопку поделиться и скопируйте номер после "/player?").<br><br>2. Скопируйте строку: <a href="https://kinotw.github.io/?gg=1&tw=residentevil" target="_blank">https://kinotw.github.io/?gg=1&tw=residentevil</a> и замените в ней число "1" на id вашего плеера GoodGame, а также "residentevil" на ваш ник на "twitch.tv".<br><br>3. Перейдите по получившейся ссылке.<br><br><br>Если вместо "goodgame.ru" вы хотите использовать "wasd.tv", то замените в ссылке "gg=1" на "wsd=ваш_ник_на_wasd", чтобы вышло следующее: <a href="https://kinotw.github.io/?wsd=1&tw=residentevil" target="_blank">https://kinotw.github.io/?wsd=1&tw=residentevil</a>.<br><br><br>Если вместо "goodgame.ru" вы хотите использовать "youtube.com", то замените в ссылке "gg=1" на "yt=id", чтобы вышло следующее: <a href="https://kinotw.github.io/?yt=Bhp1DfYGiR0&tw=residentevil" target="_blank">https://kinotw.github.io/?wsd=1&tw=residentevil</a>.</div>';
 });
 </script>
 </head>
