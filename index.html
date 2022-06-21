@@ -45,6 +45,11 @@ document.addEventListener("DOMContentLoaded", function(){
 		document.getElementById('player').src = 'https://www.youtube.com/embed/' + getQueryString()['yt'];
 		PlayerInited = true;
 	}
+	if (getQueryString()['twh'] != undefined) {
+		document.getElementById('player').src = 'https://player.twitch.tv/?channel=' + getQueryString()['twh'] + '&parent=kinotw.github.io&player=popout';
+		PlayerInited = true;
+	}
+	
 	
 	if (getQueryString()['tw'] != undefined)
 		document.getElementById('chat').src = 'https://www.twitch.tv/embed/' + getQueryString()['tw'] + '/chat?parent=kinotw.github.io';
