@@ -11,6 +11,7 @@ a{color:gray; text-decoration:none; border-bottom:1px dashed gray;}
 #wrapper{height:100%; display:flex; justify-content:space-between; align-items:center; flex-direction:row;}
 #player{width:calc(100% - 340px); height:100%;}
 #chat{width:340px; height:100%;}
+#main-text{display:none;}
 
 @media all and (max-width:550px) {
 	#wrapper{flex-direction:column;}
@@ -55,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		document.getElementById('chat').src = 'https://www.twitch.tv/embed/' + getQueryString()['tw'] + '/chat?parent=kinotw.github.io';
 		
 	if (PlayerInited == false)
-		document.getElementById('wrapper').innerHTML = '<div style="margin:0 auto; padding:25px; width:600px;">1. Узнайте id плеера на сайте "goodgame.ru", для этого нажмите кнопку поделиться и скопируйте номер после "/player?").<br><br>2. Скопируйте строку: <a href="https://kinotw.github.io/?gg=1&tw=residentevil" target="_blank">https://kinotw.github.io/?gg=1&tw=residentevil</a> и замените в ней число "1" на id вашего плеера GoodGame, а также "residentevil" на ваш ник на "twitch.tv".<br><br>3. Перейдите по получившейся ссылке.<br><br>Если вместо "goodgame.ru" вы хотите использовать "wasd.tv", то замените в ссылке "gg=1" на "wsd=ваш_ник_на_wasd", чтобы вышло следующее: <a href="https://kinotw.github.io/?wsd=1&tw=residentevil" target="_blank">https://kinotw.github.io/?wsd=1&tw=residentevil</a>.<br><br>Если вместо "goodgame.ru" вы хотите использовать "youtube.com", то замените в ссылке "gg=1" на "yt=id", чтобы вышло следующее: <a href="https://kinotw.github.io/?yt=rcFarJACzx0&tw=residentevil" target="_blank">https://kinotw.github.io/?yt=rcFarJACzx0&tw=residentevil</a>.</div>';
+		document.getElementById('wrapper').innerHTML = document.getElementById('main-text').innerHTML;
 });
 </script>
 </head>
@@ -63,6 +64,15 @@ document.addEventListener("DOMContentLoaded", function(){
 <div id="wrapper">
 	<iframe id="player" frameborder="0" allowfullscreen width="1580" height="100%" src="https://goodgame.ru/player?1"></iframe>
 	<iframe id="chat" frameborder="0" width="340" height="100%" src="https://www.twitch.tv/popout/residentevil/chat"></iframe>
+</div>
+<div id="main-text">
+	<div style="margin:0 auto; padding:25px; width:600px;">
+	1. Узнайте id плеера на сайте "goodgame.ru", для этого нажмите кнопку поделиться и скопируйте номер после "/player?").<br><br>
+	2. Скопируйте строку: <a href="https://kinotw.github.io/?gg=1&tw=residentevil" target="_blank">https://kinotw.github.io/?gg=1&tw=residentevil</a> и замените в ней число "1" на id вашего плеера GoodGame, а также "residentevil" на ваш ник на "twitch.tv" (параметр "tw" отвечает за чат).<br><br>
+	3. Перейдите по получившейся ссылке.<br><br>Если вместо "goodgame.ru" вы хотите использовать "wasd.tv", то замените в ссылке "gg=1" на "wsd=ваш_ник_на_wasd", чтобы вышло следующее: <a href="https://kinotw.github.io/?wsd=1&tw=residentevil" target="_blank">https://kinotw.github.io/?wsd=1&tw=residentevil</a>.<br><br>
+	Если вместо "goodgame.ru" вы хотите использовать "youtube.com", то замените в ссылке "gg=1" на "yt=id", чтобы вышло следующее: <a href="https://kinotw.github.io/?yt=rcFarJACzx0&tw=residentevil" target="_blank">https://kinotw.github.io/?yt=rcFarJACzx0&tw=residentevil</a>.<br><br>
+	Также можно смотреть твич трансляции, с другим чатом, для этого замените в ссылке "gg=1" на "twh=ник", чтобы вышло следующее: <a href="https://kinotw.github.io/?twh=rockstargames&tw=residentevil" target="_blank">https://kinotw.github.io/?twh=rockstargames&tw=residentevil</a>.
+	</div>
 </div>
 </body>
 </html>
