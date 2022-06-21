@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Кинозал</title>
 <style type="text/css">
-html,body{margin:0;padding:0;height:100%;overflow-y:hidden;}
+html,body{margin:0;padding:0;height:100%;overflow:hidden;}
 body{background-color:black; color:white;}
 #wrapper{height:100%; display:flex; justify-content:space-between; align-items:center;}
 @media all and (max-width:550px) {}
@@ -13,17 +13,36 @@ body{background-color:black; color:white;}
 <script type="text/javascript">
 function getQueryString() {
   var result = {}, queryString = location.search.substring(1),
-      re = /([^&=]+)=([^&]*)/g, m;
+	  re = /([^&=]+)=([^&]*)/g, m;
 
   while (m = re.exec(queryString)) {
-    result[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+	result[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
   }
 
   return result;
 }
 
+function UpdateUI(){
+	if (window.innerWidth < 600) { // временный мобильный хак
+		document.getElementById('wrapper').style.flexDirection = 'column';
+		document.getElementById('player').width = window.innerWidth;
+		document.getElementById('chat').width = window.innerWidth;
+		document.getElementById('player').height = window.innerHeight / 2;
+		document.getElementById('chat').height = window.innerHeight / 2;
+	} else {
+		document.getElementById('wrapper').style.flexDirection = 'row';
+		document.getElementById('player').width = window.innerWidth - 340;
+		document.getElementById('player').height = window.innerHeight;
+		document.getElementById('chat').height = window.innerHeight;
+	}
+}
+
+window.onresize = function(){
+	UpdateUI();
+}
+
 document.addEventListener("DOMContentLoaded", function(){
-	document.getElementById('player').width = window.innerWidth - 340;
+	
 	
 	let PlayerInited = false;
 	if (getQueryString()['gg'] != undefined) {
@@ -40,6 +59,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	if (PlayerInited == false) {
 		document.getElementById('wrapper').innerHTML = '<div style="padding:25px; text-align:center;">Для отображения кинозала добавьте id плеера GoodGame.ru (узнать номер можно нажав кнопку поделиться, после текста "/player?") или ник WASD.tv, а также ник twitch.tv в адресную строку.<br>Например: https://kinotw.github.io/?gg=1&tw=residentevil<br>или<br>https://kinotw.github.io/?wsd=1&tw=residentevil<br>(где residentevil это ник твича для чата, gg - id плеера goodgame, wsd - ник wasd)</div>';
 	}
+	
+	UpdateUI();
 });
 </script>
 </head>
