@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кинозал</title>
+<style type="text/css">
+html,body{margin:0;padding:0;height:100%;overflow:hidden;}
+body{background-color:white; color:black; font-size:16px; font-family:arial,sans-serif;}
+a{color:gray; text-decoration:none; border-bottom:1px dashed gray;}
+#wrapper{height:100%; display:flex; justify-content:space-between; align-items:center; flex-direction:row;}
+#player{width:calc(100% - 340px); height:100%;}
+#chat{width:340px; height:100%;}
+#main-text{display:none;}
+
+#window{margin:0 auto; padding:25px; max-width:600px;}
+
+input[type=text],input[type=button],input[type=submit],textarea,select,button{padding:5px; margin:10px 2px; border:1px solid #c2c2c2;}
+input[type=text]:focus,textarea:focus,select:focus{border:1px solid #686868;}
+input[type=text]{min-width:300px;}
+
+#playerdescr{display:none;}
+
+#authors{font-size:12px; color:#d8d8d8; text-align:center;}
+#authors a{color:#d8d8d8;}
+
+@media all and (max-width:550px) {
+	#wrapper{flex-direction:column;}
+	#player{width:100%; height:50%;}
+	#chat{width:100%; height:50%;}
+}
+</style>
+<script type="text/javascript">
+function getQueryString() {
+  var result = {}, queryString = location.search.substring(1),
+	  re = /([^&=]+)=([^&]*)/g, m;
+
+  while (m = re.exec(queryString)) {
+	result[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+  }
+
+  return result;
+}
+
+function getQueryStr(Str) {
+  var result = {}, re = /([^&=]+)=([^&]*)/g, m;
+
+  while (m = re.exec(Str)) {
+	result[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+  }
+
+  return result;
+}
+
+function checkGoodGame(em) {
+	if (em.value.toLowerCase().startsWith('https://goodgame.ru/'))
+		document.getElementById('playerdescr').style.display = 'block';
+	else
+		document.getElementById('playerdescr').style.display = 'none';
+}
+
+function ggsample() {
+	document.getElementById('link').value = 'https://goodgame.ru/Oleg_Kerman';
+	document.getElementById('playerdescr').style.display = 'block';
+	document.getElementById('playerid').value = '204563';
+	document.getElementById('twitch').value = 'residentevil';
+	done();
+}
+
+function ytsample() {
+	document.getElementById('link').value = 'https://www.youtube.com/watch?v=rcFarJACzx0';
+	document.getElementById('twitch').value = 'residentevil';
+	done();
+}
+
+function wasdsample() {
+	document.getElementById('link').value = 'https://wasd.tv/test1234567890';
+	document.getElementById('twitch').value = 'residentevil';
+	done();
+}
+
+function twsample() {
+	document.getElementById('link').value = 'https://www.twitch.tv/rockstargames';
+	document.getElementById('twitch').value = 'residentevil';
+	done();
+}
+
+function done() {
+	let link = document.getElementById('link').value.replace('www.', '');
+	let twitch = document.getElementById('twitch').value.trim();
+	if (document.getElementById('darktheme').checked)
+		twitch += '&dark=1';
+		
+	if (link.toLowerCase().startsWith('https://goodgame.ru/'))
+		document.getElementById('playerdescr').style.display = 'block';
+	else
+		document.getElementById('playerdescr').style.display = 'none';
+		
+	// Good game
+	if (link.toLowerCase().startsWith('https://goodgame.ru/')) { 
+		let ggplayerid = document.getElementById('playerid').value.trim();
+		if (ggplayerid == '') {alert('Введите номер плеера'); return;}
+		document.getElementById('output').innerHTML = '<b>Ваша ссылка:</b> <a href="https://kinotw.github.io/?gg=' + ggplayerid + '&tw=' + twitch + '" target="_blank">https://kinotw.github.io/?gg=' + ggplayerid + '&tw=' + twitch + '</a>';
+	
+	// YouTube
+	} else if (link.toLowerCase().startsWith('https://youtube.com/watch?v=')) { 
+		let url = new URL(link);
+		let yt = url.searchParams.get('v');
+		let time = url.searchParams.get('t');
+		if (time == undefined) time = '';
+		else yt += '&t=' + time;
+		document.getElementById('output').innerHTML = '<b>Ваша ссылка:</b> <a href="https://kinotw.github.io/?yt=' + yt + '&tw=' + twitch + '" target="_blank">https://kinotw.github.io/?yt=' + yt + '&tw=' + twitch + '</a>';
+	
+	//  YouTube shorten
+	} else if (link.toLowerCase().startsWith('https://youtu.be/')) { 
+		let url = new URL(link);
+		let time = url.searchParams.get('t');
+		if (time == undefined) time = '';
+		
+		link = link.substr(17);
+		if (link.indexOf('?') != -1)
+			link = link.substring(0, link.indexOf('?'));
+		
+		let yt = link + '&t=' + time;
+		document.getElementById('output').innerHTML = '<b>Ваша ссылка:</b> <a href="https://kinotw.github.io/?yt=' + yt + '&tw=' + twitch + '" target="_blank">https://kinotw.github.io/?yt=' + yt + '&tw=' + twitch + '</a>';
+	
+	// Twitch
+	} else if (link.toLowerCase().startsWith('https://twitch.tv/')) { 
+		link = link.substr(18);
+		if (link.indexOf('?') != -1)
+			link = link.substring(0, link.indexOf('?'));
+		document.getElementById('output').innerHTML = '<b>Ваша ссылка:</b> <a href="https://kinotw.github.io/?twh=' + link + '&tw=' + twitch + '" target="_blank">https://kinotw.github.io/?twh=' + link + '&tw=' + twitch + '</a>';
+	
+	// Wasd
+	} else if (link.toLowerCase().startsWith('https://wasd.tv/')) { 
+		link = link.substr(16);
+		if (link.indexOf('?') != -1)
+			link = link.substring(0, link.indexOf('?'));
+		document.getElementById('output').innerHTML = '<b>Ваша ссылка:</b> <a href="https://kinotw.github.io/?wsd=' + link + '&tw=' + twitch + '" target="_blank">https://kinotw.github.io/?wsd=' + link + '&tw=' + twitch + '</a>';
+	
+	// Ошибки
+	} else
+		document.getElementById('output').innerHTML = '<b>Ошибка:</b> Вероятно вы ввели что-то неверно или изменился формат ссылок.</a>';
+}
+
+function convertStringToNumbers(str) {
+   let numbers = [];
+   for (let i = 0; i < str.length; i++)
+      numbers.push(str.charCodeAt(i));
+   return numbers;
+}
+
+function convertNumbersToString(numbers) {
+   let str = '';
+   for (let i = 0; i < numbers.length; i++)
+      str += String.fromCharCode(numbers[i]);
+   return str;
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+	document.getElementById('authors').innerHTML += '<a target="_blank" href="https://t.me/' + convertNumbersToString([97, 49, 97, 110, 119, 97, 107, 101]) + '">' + convertNumbersToString([97, 49, 97, 110, 119, 97, 107, 101]) + '</a>';
+
+	let PlayerInited = false;
+	let DarkThemeEnabled = '';
+	
+	if (getQueryString()['dark'] != undefined)
+		DarkThemeEnabled = '&darkpopout';
+	
+	if (getQueryString()['gg'] != undefined) {
+		document.getElementById('player').src = 'https://goodgame.ru/player?' + getQueryString()['gg'];
+		PlayerInited = true;
+	}
+	if (getQueryString()['wsd'] != undefined) {
+		document.getElementById('player').src = 'https://wasd.tv/embed/' + getQueryString()['wsd'];
+		PlayerInited = true;
+	}
+	if (getQueryString()['yt'] != undefined) {
+		let ytTime = '';
+		if (getQueryString()['t'] != undefined)
+			ytTime = '?start=' + getQueryString()['t'];
+		document.getElementById('player').src = 'https://www.youtube.com/embed/' + getQueryString()['yt'] + ytTime;
+		PlayerInited = true;
+	}
+	if (getQueryString()['twh'] != undefined) {
+		document.getElementById('player').src = 'https://player.twitch.tv/?channel=' + getQueryString()['twh'] + '&parent=kinotw.github.io&player=popout';
+		PlayerInited = true;
+	}
+	
+	
+	if (getQueryString()['tw'] != undefined)
+		document.getElementById('chat').src = 'https://www.twitch.tv/embed/' + getQueryString()['tw'] + '/chat?parent=kinotw.github.io' + DarkThemeEnabled;
+		
+	if (PlayerInited == false)
+		document.getElementById('wrapper').innerHTML = document.getElementById('main-text').innerHTML;
+});
+</script>
+</head>
+<body>
+<div id="wrapper">
+	<iframe id="player" frameborder="0" allowfullscreen width="1580" height="100%" src="https://goodgame.ru/player?1"></iframe>
+	<iframe id="chat" frameborder="0" width="340" height="100%" src="https://www.twitch.tv/popout/residentevil/chat"></iframe>
+</div>
+<div id="main-text">
+	<div id="window">
+	<span style="font-size:20px;">Сервис для просмотра трансляций: goodgame, youtube, twitch, wasd со своим чатом твича.</span><br><br><br>
+	Ссылка на трансляцию:<br>
+	<input type="text" id="link" placeholder="Ссылка на трансляцию" oninput="checkGoodGame(this)" onchange="checkGoodGame(this)"><br>
+	<div id="playerdescr"><span style="color:#e74c3c;">Узнайте id плеера на сайте "goodgame.ru", для этого наведите мышь на плеер, нажмите кнопку "Плеер в окне" и скопируйте у ссылки цифры после "/player?" (в новом окне).</span><br>
+	<input type="text" id="playerid" placeholder="ID плеера (номер)"></div>
+	Ник на твиче:<br>
+	<input type="text" id="twitch" placeholder="Ник на твиче" value=""><br>
+	<input type="checkbox" id="darktheme" checked /><label for="darktheme"> Тёмная тема</label><br><br>
+	<input type="button" onclick="done()" value="Создать"><input type="button" onclick="ggsample()" value="Пример GoodGame"><input type="button" onclick="ytsample()" value="Пример YouTube"><input type="button" onclick="twsample()" value="Пример Twitch"><input type="button" onclick="wasdsample()" value="Пример Wasd"><br><br>
+	<span id="output"></span>
+	<br><br><br>
+	<div id="authors">Создатель: </div>
+	</div>
+</div>
+</body>
+</html>
