@@ -85,6 +85,12 @@ function twsample() {
 	done();
 }
 
+function vksample() {
+	document.getElementById('link').value = 'https://live.vkplay.ru/kerman_oleg';
+	document.getElementById('twitch').value = 'residentevil';
+	done();
+}
+
 function done() {
 	let link = document.getElementById('link').value.replace('www.', '');
 	let twitch = document.getElementById('twitch').value.trim();
@@ -138,6 +144,14 @@ function done() {
 			link = link.substring(0, link.indexOf('?'));
 		document.getElementById('output').innerHTML = '<b>Ваша ссылка:</b> <a href="https://kinotw.github.io/?wsd=' + link + '&tw=' + twitch + '" target="_blank">https://kinotw.github.io/?wsd=' + link + '&tw=' + twitch + '</a>';
 	
+	} else if (link.toLowerCase().startsWith('https://live.vkplay.ru/')) { 
+		
+		link = link.substr(23);
+		alert(link);
+		if (link.indexOf('?') != -1)
+			link = link.substring(0, link.indexOf('?'));
+		document.getElementById('output').innerHTML = '<b>Ваша ссылка:</b> <a href="https://kinotw.github.io/?vk=' + link + '&tw=' + twitch + '" target="_blank">https://kinotw.github.io/?vk=' + link + '&tw=' + twitch + '</a>';
+	
 	// Ошибки
 	} else
 		document.getElementById('output').innerHTML = '<b>Ошибка:</b> Вероятно вы ввели что-то неверно или изменился формат ссылок.</a>';
@@ -169,23 +183,22 @@ document.addEventListener("DOMContentLoaded", function(){
 	if (getQueryString()['gg'] != undefined) {
 		document.getElementById('player').src = 'https://goodgame.ru/player?' + getQueryString()['gg'];
 		PlayerInited = true;
-	}
-	if (getQueryString()['wsd'] != undefined) {
+	} else if (getQueryString()['wsd'] != undefined) {
 		document.getElementById('player').src = 'https://wasd.tv/embed/' + getQueryString()['wsd'];
 		PlayerInited = true;
-	}
-	if (getQueryString()['yt'] != undefined) {
+	} else if (getQueryString()['yt'] != undefined) {
 		let ytTime = '';
 		if (getQueryString()['t'] != undefined)
 			ytTime = '?start=' + getQueryString()['t'];
 		document.getElementById('player').src = 'https://www.youtube.com/embed/' + getQueryString()['yt'] + ytTime;
 		PlayerInited = true;
-	}
-	if (getQueryString()['twh'] != undefined) {
+	} else if (getQueryString()['twh'] != undefined) {
 		document.getElementById('player').src = 'https://player.twitch.tv/?channel=' + getQueryString()['twh'] + '&parent=kinotw.github.io&player=popout';
 		PlayerInited = true;
+	} else if (getQueryString()['vk'] != undefined) {
+		document.getElementById('player').src = 'https://live.vkplay.ru/' + getQueryString()['vk'] + '&parent=kinotw.github.io&player=popout';
+		PlayerInited = true;
 	}
-	
 	
 	if (getQueryString()['tw'] != undefined)
 		document.getElementById('chat').src = 'https://www.twitch.tv/embed/' + getQueryString()['tw'] + '/chat?parent=kinotw.github.io' + DarkThemeEnabled;
@@ -210,7 +223,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	Ник на твиче:<br>
 	<input type="text" id="twitch" placeholder="Ник на твиче" value=""><br>
 	<input type="checkbox" id="darktheme" checked /><label for="darktheme"> Тёмная тема</label><br><br>
-	<input type="button" onclick="done()" value="Создать"><input type="button" onclick="ggsample()" value="Пример GoodGame"><input type="button" onclick="ytsample()" value="Пример YouTube"><input type="button" onclick="twsample()" value="Пример Twitch"><input type="button" onclick="wasdsample()" value="Пример Wasd"><br><br>
+	<input type="button" onclick="done()" value="Создать"><input type="button" onclick="ggsample()" value="Пример GoodGame"><input type="button" onclick="ytsample()" value="Пример YouTube"><input type="button" onclick="twsample()" value="Пример Twitch"><input type="button" onclick="wasdsample()" value="Пример Wasd"><input type="button" onclick="vksample()" value="Пример VK Play"><br><br>
 	<span id="output"></span>
 	<br><br><br>
 	<div id="authors">Создатель: </div>
